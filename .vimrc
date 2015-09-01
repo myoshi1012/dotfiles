@@ -1,3 +1,8 @@
+""" for install NeoBundle """
+" mkdir -p ~.vim/bundle
+" git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+"""----------------------""""
+
 set nocompatible "vi非互換モード
 "---------------------------
 "" Start Neobundle Settings.
