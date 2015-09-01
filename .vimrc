@@ -1,141 +1,109 @@
+set nocompatible "vi非互換モード
 "---------------------------
-" Start Neobundle Settings.
+"" Start Neobundle Settings.
 "---------------------------
-" bundleで管理するディレクトリを指定
+"" bundleで管理するディレクトリを指定
 set runtimepath+=~/.vim/bundle/neobundle.vim/
  
 " Required:
-call neobundle#begin(expand('~/.vim/bundle/'))
-  
+ call neobundle#begin(expand('~/.vim/bundle/'))
+
 " neobundle自体をneobundleで管理
 NeoBundleFetch 'Shougo/neobundle.vim'
-   
-" 今後このあたりに追加のプラグインをどんどん書いて行きます！！"
 
-" NERDTreeを設定
-NeoBundle 'scrooloose/nerdtree'   
+NeoBundle 'Townk/vim-autoclose'
 
-" カラースキーム
-" molokai
+" Color themes
+NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'tomasr/molokai'
-" badwolf
-NeoBundle 'sjl/badwolf'
+NeoBundle 'vim-scripts/twilight'
+NeoBundle 'vim-scripts/twilight256.vim'
+NeoBundle 'jpo/vim-railscasts-theme'
+NeoBundle 'chriskempson/vim-tomorrow-theme'
+NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'djjcast/mirodark'
+NeoBundle 'cocopon/iceberg.vim'
+NeoBundle 'oguzbilgic/sexy-railscasts-theme'
+NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'morhetz/gruvbox'
+" Indent
+NeoBundle 'Yggdroot/indentLine'
+" for Haskell
+NeoBundle 'raichoo/haskell-vim'
 
-"haskellシンタックス
-NeoBundle 'dag/vim2hs'
+
 
 call neobundle#end()
-     
+
 " Required:
 filetype plugin indent on
-      
-" 未インストールのプラグインがある場合、インストールするかどうかを尋ねてくれるようにする設定
-" 毎回聞かれると邪魔な場合もあるので、この設定は任意です。
+
 NeoBundleCheck
-       
+
 "-------------------------
 " End Neobundle Settings.
 "-------------------------
 
-
-"#####表示設定#####
+" 表示系
+"#######################
+set number "行番号表示
+set showmode "モード表示
 set title "編集中のファイル名を表示
-syntax on "コードの色分け
-colorscheme badwolf
-set tabstop=4 "インデントをスペース4つ分に設定
+set ruler "ルーラーの表示
+set showcmd "入力中のコマンドをステータスに表示する
+set showmatch "括弧入力時の対応する括弧を表示
+set laststatus=2 "ステータスラインを常に表示
+set showmatch "対応する括弧を表示する"
+" Indent Line
+ let g:indentLine_color_term = 111
+ let g:indentLine_color_gui = '#708090'
+ let g:indentLine_char = '|' "use ¦, ┆ or │ 
+" let g:indentLine_char = 
+"set list listchars=tab:\¦\ 
+"let g:indentLine_enabled = 1
+let g:indentLine_faster = 1
+nmap <silent><Leader>i :<C-u>IndentLinesToggle<CR>
+" Color settings
+let g:solarized_termcolors=256
+"set t_Co=16
+set background=dark
+"初期設定
+syntax enable
+"colorscheme jellybeans
+colorscheme hybrid
+
+"#######################
+" プログラミングヘルプ系
+"#######################
 set smartindent "オートインデント
-" デフォルト不可視文字は美しくないのでUnicodeで綺麗に
-set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
-"#####検索設定#####
-set ignorecase "大文字/小文字の区別なく検索する
+" tab関連
+set expandtab "タブの代わりに空白文字挿入
+set ts=2 sw=2 sts=2 "タブは半角4文字分のスペース
+" ファイルを開いた際に、前回終了時の行で起動
+autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+
+"#######################
+" 検索系
+"#######################
+set ignorecase "検索文字列が小文字の場合は大文字小文字を区別なく検索する
 set smartcase "検索文字列に大文字が含まれている場合は区別して検索する
 set wrapscan "検索時に最後まで行ったら最初に戻る
-"--------------------
-"" 基本的な設定
-"--------------------
-"新しい行のインデントを現在行と同じにする
-set autoindent 
+set noincsearch "検索文字列入力時に順次対象文字列にヒットさせない
+set nohlsearch "検索結果文字列の非ハイライト表示
 
-"バックアップファイルのディレクトリを指定する
-set backupdir=$HOME/vimbackup
-"
-""クリップボードをWindowsと連携する
+"######################
+"その他
+"######################
 set clipboard=unnamed
-
-"vi互換をオフする
-""スワップファイル用のディレクトリを指定する
-set directory=$HOME/vimbackup
-
-"タブの代わりに空白文字を指定する
-set expandtab
-"
-""変更中のファイルでも、保存しないで他のファイルを表示する
-set hidden
-
-"インクリメンタルサーチを行う
-set incsearch
-"
-""行番号を表示する
-set number
-"閉括弧が入力された時、対応する括弧を強調する
-set showmatch
-"
-""新しい行を作った時に高度な自動インデントを行う
-set smarttab
-
-" grep検索を設定する
-set grepformat=%f:%l:%m,%f:%l%m,%f\ \ %l%m,%f
-set grepprg=grep\ -nh
-"
-" " 検索結果のハイライトをEsc連打でクリアする
-nnoremap <ESC><ESC> :nohlsearch<CR>
-
-
-" 文字コードの自動認識
-if &encoding !=# 'utf-8'
-	set encoding=japan
-	set fileencoding=japan
-endif
-if has('iconv')
-	let s:enc_euc = 'euc-jp'
-	let s:enc_jis = 'iso-2022-jp'
-" iconvがeucJP-msに対応しているかをチェック
-	if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
-		let s:enc_euc = 'eucjp-ms'
-		let s:enc_jis = 'iso-2022-jp-3'
-	" iconvがJISX0213に対応しているかをチェック
-	elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
-		let s:enc_euc = 'euc-jisx0213'
-		let s:enc_jis = 'iso-2022-jp-3'
-	endif
-" fileencodingsを構築
-	if &encoding ==# 'utf-8'
-		let s:fileencodings_default = &fileencodings
-		let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
-		let &fileencodings = &fileencodings .','. s:fileencodings_default
-		unlet s:fileencodings_default
-	else
-		let &fileencodings = &fileencodings .','. s:enc_jis
-		set fileencodings+=utf-8,ucs-2le,ucs-2
-		if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
-			set fileencodings+=cp932
-			set fileencodings-=euc-jp
-			set fileencodings-=euc-jisx0213
-			set fileencodings-=eucjp-ms
-			let &encoding = s:enc_euc
-			let &fileencoding = s:enc_euc
-		else
-			let &fileencodings = &fileencodings .','. s:enc_euc
-		endif
-	endif
-	" 定数を処分
-	unlet s:enc_euc
-	unlet s:enc_jis
-endif
-
-" 改行コードの自動認識
-set fileformats=unix,dos,mac
-" □とか○の文字があってもカーソル位置がずれないようにする
-if exists('&ambiwidth')
-	set ambiwidth=double
-endif
+set hidden "編集中でも他のファイルを表示"
+"######################
+" for Haskell
+" ####################
+" Indents
+let g:haskell_indent_if = 3
+let g:haskell_indent_case = 2
+let g:haskell_indent_let = 4
+let g:haskell_indent_where = 6
+let g:haskell_indent_do = 3
+let g:haskell_indent_in = 1
+let g:haskell_enable_arrowsyntax = 1
