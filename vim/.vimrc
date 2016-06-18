@@ -4,6 +4,7 @@
 """----------------------""""
 
 set nocompatible "vi非互換モード
+set backspace=2
 "---------------------------
 "" Start Neobundle Settings.
 "---------------------------
@@ -17,6 +18,10 @@ set runtimepath+=~/.vim/bundle/neobundle.vim/
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 NeoBundle 'Townk/vim-autoclose'
+
+" auto compeletion
+NeoBundle 'Shougo/neocomplete.vim'
+let g:neocomplete#enable_at_startup = 1 
 
 " Color themes
 NeoBundle 'altercation/vim-colors-solarized'
@@ -35,6 +40,12 @@ NeoBundle 'morhetz/gruvbox'
 NeoBundle 'Yggdroot/indentLine'
 " for Haskell
 NeoBundle 'raichoo/haskell-vim'
+" MarkDown
+NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'kannokanno/previm'
+NeoBundle 'tyru/open-browser.vim'
+" verliog
+NeoBundle 'scrooloose/syntastic'
 
 
 
@@ -112,3 +123,10 @@ let g:haskell_indent_where = 6
 let g:haskell_indent_do = 3
 let g:haskell_indent_in = 1
 let g:haskell_enable_arrowsyntax = 1
+
+let g:ycm_semantic_triggers = {'haskell' : ['.']}
+let g:necoghc_enable_detailed_browse = 1
+"####################
+" file type
+"####################
+au BufRead,BufNewFile *.md set filetype=markdown
