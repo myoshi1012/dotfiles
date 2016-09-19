@@ -95,7 +95,7 @@ colorscheme hybrid
 set smartindent "オートインデント
 " tab関連
 set expandtab "タブの代わりに空白文字挿入
-set ts=2 sw=2 sts=2 "タブは半角4文字分のスペース
+set ts=2 sw=2 sts=2 
 " ファイルを開いた際に、前回終了時の行で起動
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 "" ファイルタイプでインデント幅を変える
@@ -119,24 +119,12 @@ set nohlsearch "検索結果文字列の非ハイライト表示
 "######################
 set clipboard=unnamed
 set hidden "編集中でも他のファイルを表示"
-"######################
-" for Haskell
-" ####################
-" Indents
-let g:haskell_indent_if = 3
-let g:haskell_indent_case = 2
-let g:haskell_indent_let = 4
-let g:haskell_indent_where = 6
-let g:haskell_indent_do = 3
-let g:haskell_indent_in = 1
-let g:haskell_enable_arrowsyntax = 1
 
-let g:ycm_semantic_triggers = {'haskell' : ['.']}
-let g:necoghc_enable_detailed_browse = 1
 "####################
 " file type
 "####################
 au BufRead,BufNewFile *.md set filetype=markdown
+au BufRead,BufNewFile *.hs set filetype=haskell
 
 " 分割した設定ファイルをすべて読み込む
 set runtimepath+=~/.vim/
