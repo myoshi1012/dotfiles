@@ -40,6 +40,7 @@ NeoBundle 'morhetz/gruvbox'
 NeoBundle 'Yggdroot/indentLine'
 " for Haskell
 NeoBundle 'raichoo/haskell-vim'
+"NeoBundle 'dag/vim2hs'
 " MarkDown
 NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'kannokanno/previm'
@@ -97,6 +98,12 @@ set expandtab "タブの代わりに空白文字挿入
 set ts=2 sw=2 sts=2 "タブは半角4文字分のスペース
 " ファイルを開いた際に、前回終了時の行で起動
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+"" ファイルタイプでインデント幅を変える
+augroup fileTypeIndent
+  autocmd!
+  autocmd BufNewFile,BufRead *.py setlocal tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd BufNewFile,BufRead *.rb setlocal tabstop=2 softtabstop=2 shiftwidth=2
+augroup END
 
 "#######################
 " 検索系
@@ -130,3 +137,7 @@ let g:necoghc_enable_detailed_browse = 1
 " file type
 "####################
 au BufRead,BufNewFile *.md set filetype=markdown
+
+" 分割した設定ファイルをすべて読み込む
+set runtimepath+=~/.vim/
+runtime! rc/*.vim
