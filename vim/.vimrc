@@ -47,6 +47,8 @@ NeoBundle 'kannokanno/previm'
 NeoBundle 'tyru/open-browser.vim'
 " verliog
 NeoBundle 'scrooloose/syntastic'
+" rust
+NeoBundle 'rust-lang/rust.vim'
 
 
 
